@@ -47,8 +47,8 @@ This metric is assessed by checking if each software resolves to the appropriate
 
 (link: &quot;Next metric: FRSM-03 identifiers for each version&quot;)[
 	(if: $frsm_02a)[(set: $f_score to it + 1)]
- 	(if: $frsm_02b)[(set: $f_score to it + 5)]
-    (if: $frsm_02c)[(set: $f_score to it + 5)]
+ 	(if: $frsm_02b)[(set: $f_score to it + 0.25)]
+    (if: $frsm_02c)[(set: $f_score to it + 0.25)]
 	(if: $frsm_02a or $frsm_02b or $frsm_02c)[(set: $fair_tally to it + 1)]
 	(go-to: &quot;FRSM-03&quot;)
 ]
@@ -88,11 +88,20 @@ Let&#39;s get started, by clicking below to go to the question on the first metr
 [
    (set: $fair_score to $fair_tally / 17 * 100)
    ---
-   (text-colour:red)[
+  &lt;!--
+  (text-colour:red)[
       Current FAIR indicators - F: $f_score A: $a_score I: $i_score R: $r_score 
       Current FAIR score: (round:$fair_score)%
    ]
-   (meter: bind $fair_score, 100, &quot;X&quot;,  red)
+   --&gt;
+
+  (meter: bind $fair_score, 100, &quot;X&quot;, &quot;FAIRness: (round:$fair_score)&quot;,  red)
+   
+  (meter: bind $f_score, 11.5, &quot;X&quot;, &quot;Findability&quot;, green)
+  (meter: bind $a_score, 2.5, &quot;X&quot;, &quot;Accessibility&quot;, green)
+  (meter: bind $i_score, 4, &quot;X&quot;, &quot;Interoperability&quot;, green)
+  (meter: bind $r_score, 8, &quot;X&quot;, &quot;Reusability&quot;, green)
+
 ]</tw-passagedata><tw-passagedata pid="6" name="startup" tags="startup" position="700,500" size="100,100">&lt;!-- Global variables --&gt;
 
 (set: $f_score to 0) 
@@ -167,7 +176,253 @@ This metric can be assessed by checking if the software has machine-readable des
 
 &lt;!--
 [[FRSM-06]]
---&gt;</tw-passagedata><tw-passagedata pid="10" name="FRSM-06" tags="" position="1350,950" size="100,100">[[FRSM-07]]</tw-passagedata><tw-passagedata pid="11" name="FRSM-07" tags="" position="1350,1075" size="100,100">[[FRSM-08]]</tw-passagedata><tw-passagedata pid="12" name="FRSM-08" tags="" position="1350,1200" size="100,100">[[FRSM-09]]</tw-passagedata><tw-passagedata pid="13" name="FRSM-09" tags="" position="1350,1325" size="100,100">[[FRSM-10]]</tw-passagedata><tw-passagedata pid="14" name="FRSM-10" tags="" position="1350,1450" size="100,100">[[FRSM-11]]</tw-passagedata><tw-passagedata pid="15" name="FRSM-11" tags="" position="1350,1575" size="100,100">[[FRSM-12]]</tw-passagedata><tw-passagedata pid="16" name="FRSM-12" tags="" position="1350,1700" size="100,100">[[FRSM-13]]</tw-passagedata><tw-passagedata pid="17" name="FRSM-13" tags="" position="1350,1825" size="100,100">[[FRSM-14]]</tw-passagedata><tw-passagedata pid="18" name="FRSM-14" tags="" position="1350,1950" size="100,100">[[FRSM-15]]</tw-passagedata><tw-passagedata pid="19" name="FRSM-15" tags="" position="1350,2075" size="100,100">[[FRSM-16]]</tw-passagedata><tw-passagedata pid="20" name="FRSM-16" tags="" position="1350,2200" size="100,100">[[FRSM-17]]</tw-passagedata><tw-passagedata pid="21" name="FRSM-17" tags="" position="1350,2325" size="100,100">[[Finish the assessment]]</tw-passagedata><tw-passagedata pid="22" name="Finish the assessment" tags="" position="1350,2450" size="100,100">&#39;&#39;Assessment Complete
+--&gt;</tw-passagedata><tw-passagedata pid="10" name="FRSM-06" tags="" position="1350,950" size="100,100">&#39;&#39;Does the software include metadata about the contributors and their roles?
+&#39;&#39;
+
+Software should make it easy to recognise and credit all contributors. There are several common places for contributor metadata to be found, including README files, CodeMeta or CFF files, in the code repository metadata, or in the software identifier metadata. It may also be directly embedded in software source code files.  Criteria for which roles are included is normally defined by the community.
+
+This metric can be assessed by checking if the software and/or software identifier has machine readable descriptive metadata associated with it that include contributors and roles.
+
+(checkbox: 2bind $frsm_06a, &quot;The software includes metadata about the contributors&quot;)
+(checkbox: 2bind $frsm_06b, &quot;The software includes citation metadata that includes all contributors and their roles. This includes ORCIDs when contributors have them.&quot;)
+(checkbox: 2bind $frsm_06c, &quot;The citation metadata includes the proportional credit attributed to each contributor&quot;)
+
+(link: &quot;Next metric: FRSM-07 software identifier citable&quot;)[
+	(if: $frsm_06a)[(set: $f_score to it + 1)]
+ 	(if: $frsm_06b)[(set: $f_score to it + 0.25)]
+    (if: $frsm_06c)[(set: $f_score to it + 0.25)(set: $r_score to it + 0.25)]
+	(if: $frsm_06a or $frsm_06b or $frsm_06c)[(set: $fair_tally to it + 1)]
+	(go-to: &quot;FRSM-07&quot;)
+]
+
+&lt;!--
+[[FRSM-07]]
+--&gt;</tw-passagedata><tw-passagedata pid="11" name="FRSM-07" tags="" position="1350,1075" size="100,100">&#39;&#39;Does the software metadata include the identifier for the software?&#39;&#39;
+
+Software should include its identifier to make it easier to be cited and indexed. There are several common places for identifier metadata to be found, including README files, CodeMeta or CFF files. The choice of location may depend on community standards.
+
+This metric can be assessed by checking if the software includes its own software identifier, and that the identifier resolves to that software.
+
+(checkbox: 2bind $frsm_07a, &quot;Does the software include an identifier in the README or citation file?&quot;)
+(checkbox: 2bind $frsm_07b, &quot;Does the identifier resolve to the same instance of the software?&quot;)
+
+(link: &quot;Next metric: FRSM-08 open and persistent metadata record&quot;)[
+	(if: $frsm_07a)[(set: $f_score to it + 1)]
+ 	(if: $frsm_07b)[(set: $f_score to it + 0.25)]
+	(if: $frsm_07a or $frsm_07b)[(set: $fair_tally to it + 1)]
+	(go-to: &quot;FRSM-08&quot;)
+]
+
+&lt;!--
+[[FRSM-08]]
+--&gt;</tw-passagedata><tw-passagedata pid="12" name="FRSM-08" tags="" position="1350,1200" size="100,100">&#39;&#39;Does the software have a publicly available, openly accessible and persistent metadata record?&#39;&#39;
+
+Even if the software itself is no longer usable or accessible, its metadata should still be available and accessible. Potential locations for persistent metadata records include scholarly repositories (e.g. Zenodo, HAL, OSF), registries or catalogues (e.g. ASCL, bio.tools, swMath), open scholarly infrastructure (e.g. Wikidata, DataCite, IPOL, eLife). The choice of location is dependent on community standards.
+
+This metric can be assessed by checking if the software identifier includes a reference to a persistent landing page or other metadata record, and if that metadata is still accessible.
+
+(checkbox: 2bind $frsm_08a, &quot;A metadata record for the software is present on an infrastructure that guarantees persistence.&quot;)
+(checkbox: 2bind $frsm_08b, &quot;The persistent metadata record is available through public search engines. The metadata has a globally unique and persistent identifier.&quot;)
+(checkbox: 2bind $frsm_08c, &quot;The persistent metadata record is available through multiple, cross-referenced infrastructures.&quot;)
+
+(link: &quot;Next metric: FRSM-09 repository uses standard protocolos&quot;)[
+	(if: $frsm_08a)[(set: $f_score to it + 1)(set: $a_score to it + 1)]
+ 	(if: $frsm_08b)[(set: $f_score to it + 0.25)(set: $a_score to it + 0.25)]
+    (if: $frsm_08c)[(set: $f_score to it + 0.25)]
+	(if: $frsm_08a or $frsm_08b or $frsm_08c)[(set: $fair_tally to it + 1)]
+	(go-to: &quot;FRSM-09&quot;)
+]
+&lt;!--
+[[FRSM-09]]
+--&gt;</tw-passagedata><tw-passagedata pid="13" name="FRSM-09" tags="" position="1350,1325" size="100,100">&#39;&#39;Is the software developed in a code repository / forge that uses standard communications protocols?
+&#39;&#39;
+Software source code repositories / forges (a.k.a. version control platforms) should use standard communications protocols (such as https / sftp)  to enable the widest possible set of contributors. In general, most widely used code repositories / forges use common standardised communications protocols such as https or sftp. In normal use, this test will be implemented by checking that the repository / forge can be accessed using one of these protocols. Using a software forge that is properly indexed by search engines will help with other aspects of findability. 
+
+This metric can be assessed by checking if the identifier for the code repository / forge can be accessed using standardised communications protocols such as https or sftp.
+
+(checkbox: 2bind $frsm_09a, &quot;The code repository / forge can be accessed using the identifier via a standardised protocol.&quot;)
+(checkbox: 2bind $frsm_09b, &quot;If authentication or authorisation are required, these are supported by the communication protocols and the  repository / forge.&quot;)
+
+(link: &quot;Next metric: FRSM-10 open data formats&quot;)[
+	(if: $frsm_09a)[(set: $a_score to it + 1)]
+ 	(if: $frsm_09b)[(set: $a_score to it + 0.25)]
+ 	(if: $frsm_09a or $frsm_09b)[(set: $fair_tally to it + 1)]
+	(go-to: &quot;FRSM-10&quot;)
+]
+
+&lt;!--
+[[FRSM-10]]
+--&gt;</tw-passagedata><tw-passagedata pid="14" name="FRSM-10" tags="" position="1350,1450" size="100,100">&#39;&#39;Are the formats used by the data consumed or produced by the software open and a reference provided to the format?&#39;&#39;
+
+The use of open file formats for data improves the reusability and understandability of the software.
+
+This metric is inherently difficult to implement in an automated assessment as at present there is no standardised or common method for describing the data / file formats used by a piece of software in a machine-readable way. Community standards commonly define the data formats in use in a discipline, and resources such as FAIRsharing.org provide a curated catalogues of standards.
+
+This metric can be assessed by checking if the software source code and documentation for references to the data formats used.
+
+(checkbox: 2bind $frsm_10a, &quot;The documentation describes the data formats used &quot;)
+(checkbox: 2bind $frsm_10b, &quot;The data formats used are open. &quot;)
+(checkbox: 2bind $frsm_10c, &quot;A reference to the schema is provided.&quot;)
+
+(link: &quot;Next metric: FRSM-11 use of open, machine-readable APIs&quot;)[
+	(if: $frsm_10a)[(set: $i_score to it + 1)]
+ 	(if: $frsm_10b)[(set: $i_score to it + 0.25)]
+    (if: $frsm_10c)[(set: $i_score to it + 0.25)]
+	(if: $frsm_10a or $frsm_10b or $frsm_10c)[(set: $fair_tally to it + 1)]
+	(go-to: &quot;FRSM-11&quot;)
+]
+
+&lt;!--
+[[FRSM-11]]
+--&gt;</tw-passagedata><tw-passagedata pid="15" name="FRSM-11" tags="" position="1350,1575" size="100,100">&#39;&#39;Does the software use open APIs that support machine-readable interface definition?&#39;&#39;
+
+An open Application Programming Interface can be freely accessed by other software or developers, which makes it easier to integrate software and encourages modularity and reuse.
+
+The OpenAPI specification is a machine-readable interface definition language for describing, producing, consuming and visualising web services. Additionally, the SmartAPI project has developed a openAPI-based specification for defining the key API metadata elements and value sets, to maximise the FAIRness of web-based APIs.
+
+This could be extended to test that the API is callable and does not return an error code.
+
+
+(checkbox: 2bind $frsm_11a, &quot;The software provides documented APIs&quot;)
+(checkbox: 2bind $frsm_11b, &quot;The APIs are open (freely accessible)&quot;)
+(checkbox: 2bind $frsm_11c, &quot;The APIs include a machine-readable interface definition&quot;)
+(checkbox: 2bind $frsm_11d, &quot;No APIs implemented in the software&quot;)
+
+
+(link: &quot;Next metric: FRSM-12 References to other objects&quot;)[
+	(if: $frsm_11a)[(set: $i_score to it + 1)]
+ 	(if: $frsm_11b)[(set: $i_score to it + 0.25)]
+    (if: $frsm_11c)[(set: $i_score to it + 0.25)]
+    (
+	(if: $frsm_11a or $frsm_11b or $frsm_11c or $frsm_11d)[(set: $fair_tally to it + 1)]
+	(go-to: &quot;FRSM-12&quot;)
+]
+
+&lt;!--
+[[FRSM-12]]
+--&gt;</tw-passagedata><tw-passagedata pid="16" name="FRSM-12" tags="" position="1350,1700" size="100,100">&#39;&#39;Does the software provide references to other objects that support its use?&#39;&#39;
+
+Determining the usefulness of a piece of software is often aided by understanding what it is used with.
+
+This metric is currently difficult to implement as there is no standard machine-readable way to define the relationships at a level of detail that provides suitable meaning, although CodeMeta defines some of these relationships (e.g. supportingData, referencePublication).
+
+(checkbox: 2bind $frsm_12a, &quot;The software metadata includes machine-readable references to articles describing the software, articles demonstrating use of the software, or to the data it uses.&quot;)
+
+(link: &quot;Next metric: FRSM-13 Software requirements&quot;)[
+	(if: $frsm_12a)[(set: $i_score to it + 1)]
+	(if: $frsm_12a)[(set: $fair_tally to it + 1)]
+	(go-to: &quot;FRSM-13&quot;)
+]
+
+&lt;!--
+[[FRSM-13]]
+--&gt;</tw-passagedata><tw-passagedata pid="17" name="FRSM-13" tags="" position="1350,1825" size="100,100">&#39;&#39;Does the software describe what is required to use it?&#39;&#39;
+
+Software is made more reusable by providing suitable machine-actionable information on dependencies, build and configuration.
+
+Most programming languages provide standardised ways of providing dependency information in a machine-actionable format. Build and package management systems can be used to automate the installation process. It is hard to check the relevance / correctness of this information, but it is possible to automatically check for existence and error-free build. 
+
+Detailed documentation also aids the reusability of software but it is difficult to automatically test for documentation coverage. 
+
+This metric can be assessed by checking for machine-readable information that helps support the understanding of how it is used.
+
+(checkbox: 2bind $frsm_13a, &quot;The software has build, installation and/or execution instructions&quot;)
+(checkbox: 2bind $frsm_13b, &quot;Dependencies are provided in a machine-readable format and the building and installation of the software is automated.&quot;)
+
+(link: &quot;Next metric: FRSM-14 Test cases&quot;)[
+	(if: $frsm_13a)[(set: $r_score to it + 1)]
+ 	(if: $frsm_13b)[(set: $r_score to it + 0.25)]
+	(if: $frsm_13a or $frsm_13b)[(set: $fair_tally to it + 1)]
+	(go-to: &quot;FRSM-14&quot;)
+]
+
+&lt;!--
+[[FRSM-14]]
+--&gt;</tw-passagedata><tw-passagedata pid="18" name="FRSM-14" tags="" position="1350,1950" size="100,100">&#39;&#39;Does the software come with test cases to demonstrate it is working?&#39;&#39;
+
+The provision of test cases improves confidence in the software.
+
+Most programming languages have commonly associated test frameworks. The specific definition of what constitutes adequate testing is often defined by community norms. It is hard to check the relevance / correctness of this information, but it is possible to automatically check for existence. 
+
+This metric can be assessed by checking for the presence of automated tests.
+
+(checkbox: 2bind $frsm_14a, &quot;Tests and data are provided to check that the software is operating as expected&quot;)
+(checkbox: 2bind $frsm_14b, &quot;Automated unit and system tests are provided&quot;)
+(checkbox: 2bind $frsm_14c, &quot;Code coverage / test coverage is reported&quot;)
+
+(link: &quot;Next metric: FRSM-15 Licensing information&quot;)[
+	(if: $frsm_14a)[(set: $r_score to it + 1)]
+ 	(if: $frsm_14b)[(set: $r_score to it + 0.25)]
+    (if: $frsm_14c)[(set: $r_score to it + 0.25)]
+	(if: $frsm_14a or $frsm_14b or $frsm_14c)[(set: $fair_tally to it + 1)]
+	(go-to: &quot;FRSM-15&quot;)
+]
+
+&lt;!--
+[[FRSM-15]]
+--&gt;</tw-passagedata><tw-passagedata pid="19" name="FRSM-15" tags="" position="1350,2075" size="100,100">&#39;&#39;Does the software source code include licensing information for the software and any bundled external software?&#39;&#39;
+
+Clear software licensing enables reuse. Each community may have different licences that are popular. It is important that software licences are included with the source code as many tools and processes look for licensing information there to determine licence compatibility.
+
+The SPDX License List is a widely used part of the Software Project Data eXchange (SPDX) open standard. Information about the licence for a piece of software can be provided either as a file in the source code repository, or as a short identifier embedded in the source code files. 
+
+This metric can be assessed by checking the software and its documentation for the presence of a licence.
+
+(checkbox: 2bind $frsm_15a, &quot;The software includes its LICENCE file &quot;)
+(checkbox: 2bind $frsm_15b, &quot;The source code includes licensing information for all components bundled with that software&quot;)
+(checkbox: 2bind $frsm_15c, &quot;The software licensing information is in SPDX format&quot;)
+
+(link: &quot;Next metric: FRSM-16 Metadata includes licensing information&quot;)[
+	(if: $frsm_15a)[(set: $r_score to it + 1)]
+ 	(if: $frsm_15b)[(set: $r_score to it + 0.25)]
+    (if: $frsm_15c)[(set: $r_score to it + 0.25)]
+	(if: $frsm_15a or $frsm_15b or $frsm_15c)[(set: $fair_tally to it + 1)]
+	(go-to: &quot;FRSM-16&quot;)
+]
+
+&lt;!--
+[[FRSM-16]]
+--&gt;</tw-passagedata><tw-passagedata pid="20" name="FRSM-16" tags="" position="1350,2200" size="100,100">&#39;&#39;Does the software metadata record include licensing information?&#39;&#39;
+
+It is important for licensing information to be on the publicly searchable and accessible metadata record. This can be defined in different ways, e.g. the “Rights” field in the DOI metadata.
+
+This metric can be assessed by checking if the software identifier or the metadata record referenced by it includes licensing information.
+
+(checkbox: 2bind $frsm_16a, &quot;The identifier or metadata record includes licensing and copyright information&quot;)
+(checkbox: 2bind $frsm_16c, &quot;The software licensing information is in SPDX format, or other machine-readable form.&quot;)
+
+(link: &quot;Next metric: FRSM-17 Provenance information&quot;)[
+	(if: $frsm_16a)[(set: $r_score to it + 1)]
+    (if: $frsm_16c)[(set: $r_score to it + 0.25)]
+	(if: $frsm_16a or $frsm_16c)[(set: $fair_tally to it + 1)]
+	(go-to: &quot;FRSM-17&quot;)
+]
+
+&lt;!--
+[[FRSM-17]]
+--&gt;</tw-passagedata><tw-passagedata pid="21" name="FRSM-17" tags="" position="1350,2325" size="100,100">&#39;&#39;Does the software include provenance information that describe the development of the software?&#39;&#39;
+
+Good provenance metadata clarifies the origins and intent behind the development of the software, and establishes authenticity and trust. As a type of metadata this overlaps with the metadata called for in guiding principles F2 and F4. It may also be necessary to record information about the way that the software has been developed, such as the development environment used. The methodology for building the software is tested in FRSM-13.
+
+It is hard to check the relevance / correctness of this information, but it is possible to automatically check for existence. 
+
+This metric can be assessed by checking the development metadata available from the code repository / forge for the software.
+
+(checkbox: 2bind $frsm_17a, &quot;The software source code repository / forge includes  a commit history&quot;)
+(checkbox: 2bind $frsm_17b, &quot;The software source code repository links commits to issues / tickets&quot;)
+(checkbox: 2bind $frsm_17c, &quot;The software project uses other tools to capture detailed machine readable provenance information.&quot;)
+
+(link: &quot;Finish the assessment&quot;)[
+	(if: $frsm_17a)[(set: $r_score to it + 1)]
+ 	(if: $frsm_17b)[(set: $r_score to it + 0.25)]
+    (if: $frsm_17c)[(set: $r_score to it + 0.25)]
+	(if: $frsm_17a or $frsm_17b or $frsm_17c)[(set: $fair_tally to it + 1)]
+	(go-to: &quot;Finish the assessment&quot;)
+]
+
+&lt;!--
+[[Finish the assessment]]
+--&gt;</tw-passagedata><tw-passagedata pid="22" name="Finish the assessment" tags="" position="1350,2450" size="100,100">&#39;&#39;Assessment Complete
 &#39;&#39;
 You&#39;ve now considered all the metrics defined by FAIR IMPACT for assessing research software.
 
@@ -179,18 +434,23 @@ The overall FAIR score is calculated by identifying what percentage of metrics y
 
 The individual scores for the different categories were:
 
- (meter: bind $f_score, 100, &quot;X&quot;, &quot;Findability&quot;, green)
- (meter: bind $a_score, 100, &quot;X&quot;, &quot;Accessability&quot;, green)
- (meter: bind $i_score, 100, &quot;X&quot;, &quot;Interoperability&quot;, green)
- (meter: bind $r_score, 100, &quot;X&quot;, &quot;Reusability&quot;, green)
+ (meter: bind $f_score, 11.5, &quot;X&quot;, &quot;Findability&quot;, green)
+ (meter: bind $a_score, 2.5, &quot;X&quot;, &quot;Accessability&quot;, green)
+ (meter: bind $i_score, 4, &quot;X&quot;, &quot;Interoperability&quot;, green)
+ (meter: bind $r_score, 8, &quot;X&quot;, &quot;Reusability&quot;, green)
 
 These metrics were developed to be domain-agnostic, and take into account characteristics which are specific to research software such as its executability, its composite nature and its continuous evolution and versioning. Though most of the FAIR4RS Principles can be turned into a measurable metric, some are much harder to quantify, and hence be assessed by any automated tool in the future. In these cases, it may only be possible to test for existence rather than quality or correctness. Others, such as “R3. Software meets domain-relevant community standards” can be seen to apply to many metrics, and the implementation of a metric will reference these community standards.
 
 There is an expectation that while the metric and assessment methods will remain the same, the criteria for each compliance level will change as adoption of the FAIR principles increases and infrastructure, tools and guidance improve: what is considered essential should reflect an achievable level of compliance at the current time. 
 
-[[End]]</tw-passagedata><tw-passagedata pid="23" name="End" tags="" position="1350,2575" size="100,100">Thank you for trying out this prototype FAIR Software Assessment tool.
+[[End]]
 
-(click:&quot;Restart and assess another piece of software&quot;)[(restart:)]</tw-passagedata></tw-storydata>
+(set: $no_footer to False)</tw-passagedata><tw-passagedata pid="23" name="End" tags="" position="1350,2575" size="100,100">Thank you for trying out this prototype FAIR Software Assessment tool.
+
+(link: &quot;Restart and assess another piece of software&quot;)[(restart:)]
+(link: &quot;Return to the workshop page&quot;)[(goto-url: &quot;https://fair-by-design-methodology.github.io/IDCC24workshop/latest/&quot;)]
+
+(set: $no_footer to False)</tw-passagedata></tw-storydata>
 <script title="Twine engine code" data-main="harlowe">(function(){"use strict";
 var require,define;!function(){var e={},r={};require=function(i){var n=e[i];return n&&(r[i]=n[1].apply(void 0,n[0].map(require)),e[i]=void 0),r[i]},(define=function(r,i,n){if("function"==typeof r)return r();e[r]=[i,n]}).amd=!0}();/*!
  * https://github.com/paulmillr/es6-shim
