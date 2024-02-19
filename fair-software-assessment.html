@@ -35,7 +35,7 @@ The type of identifier assigned will often depend on the type of repository that
 
 Conceptually, it is useful for identifiers to be assigned at a more granular level than just the software project (often synonymous with the “software concept” or “software project”). For instance a software product may consist of different modules, which in turn may be implemented by different files. This metric tests that these different components are not all assigned the same identifier, and that the relationship between components is embodied in the identifier metadata. 
 
-The granularity levels for software have been defined by the (link-repeat: &quot;RDA Software Source Code Identifiers WG&quot;)[(open-url: &quot;https://doi.org/10.5281/zenodo.5504016&quot;)]. Identifiers for each software component should be globally unique and persistent (as tested by FRSM-01).
+The granularity levels for software have been defined by the (link-repeat: &quot;RDA Software Source Code Identifiers WG (p9)&quot;)[(open-url: &quot;https://doi.org/10.15497/RDA00053&quot;)]. Identifiers for each software component should be globally unique and persistent (as tested by FRSM-01).
 
 This metric should not be confused with FRSM-10 and FRSM-12 (related to I2) which checks that other related non-software objects are properly described and FRSM-13 (related to R2) which checks that software dependencies which are not considered a part of the software concept of product are described.
 
@@ -135,7 +135,7 @@ This metric is assessed by checking if each software identifier resolves to a di
 &#39;&#39;
 Software requires descriptive metadata to support indexing, search and discoverability.
 
-There are several common places for descriptive metadata to be found, including intrinsic metadata that is part of the software source code such as README files, requirements files that describe dependencies, POM, CodeMeta or CFF files, or in the extrinsic metadata available through resolving the software identifier. It may also be directly embedded in software source code files. The implementation of this metric will depend on the coding standards for the programming language as well as community norms for which descriptive metadata is used. 
+There are several common places for descriptive metadata to be found, including intrinsic metadata that is part of the software source code such as README files, requirements files that describe dependencies, Project Object Model (POM), CodeMeta or Citation File Format (CFF) files, or in the extrinsic metadata available through resolving the software identifier. It may also be directly embedded in software source code files. The implementation of this metric will depend on the coding standards for the programming language as well as community norms for which descriptive metadata is used. 
 
 This metric can be assessed by checking if the software has machine-readable descriptive metadata that describes its purpose.
 
@@ -153,7 +153,7 @@ This metric can be assessed by checking if the software has machine-readable des
 
 &lt;!--
 [[FRSM-05]]
---&gt;</tw-passagedata><tw-passagedata pid="9" name="FRSM-05" tags="" position="1350,825" size="100,100">&#39;Does the software include development metadata which helps define its status?
+--&gt;</tw-passagedata><tw-passagedata pid="9" name="FRSM-05" tags="" position="1350,825" size="100,100">&#39;&#39;Does the software include development metadata which helps define its status?
 &#39;&#39;
 Software requires descriptive metadata to support indexing, search and discoverability. This includes information that helps identify the current development status of the software.
 
@@ -179,7 +179,7 @@ This metric can be assessed by checking if the software has machine-readable des
 --&gt;</tw-passagedata><tw-passagedata pid="10" name="FRSM-06" tags="" position="1350,950" size="100,100">&#39;&#39;Does the software include metadata about the contributors and their roles?
 &#39;&#39;
 
-Software should make it easy to recognise and credit all contributors. There are several common places for contributor metadata to be found, including README files, CodeMeta or CFF files, in the code repository metadata, or in the software identifier metadata. It may also be directly embedded in software source code files.  Criteria for which roles are included is normally defined by the community.
+Software should make it easy to recognise and credit all contributors. There are several common places for contributor metadata to be found, including README files, CodeMeta or Citation File Format (CFF) files, in the code repository metadata, or in the software identifier metadata. It may also be directly embedded in software source code files.  Criteria for which roles are included is normally defined by the community.
 
 This metric can be assessed by checking if the software and/or software identifier has machine readable descriptive metadata associated with it that include contributors and roles.
 
@@ -262,7 +262,7 @@ This metric can be assessed by checking if the software source code and document
 
 (checkbox: 2bind $frsm_10a, &quot;The documentation describes the data formats used &quot;)
 (checkbox: 2bind $frsm_10b, &quot;The data formats used are open. &quot;)
-(checkbox: 2bind $frsm_10c, &quot;A reference to the schema is provided.&quot;)
+(checkbox: 2bind $frsm_10c, &quot;A reference to the schema for the data formats is provided.&quot;)
 
 (link: &quot;Next metric: FRSM-11 use of open, machine-readable APIs&quot;)[
 	(if: $frsm_10a)[(set: $i_score to it + 1)]
@@ -368,7 +368,7 @@ The SPDX License List is a widely used part of the Software Project Data eXchang
 
 This metric can be assessed by checking the software and its documentation for the presence of a licence.
 
-(checkbox: 2bind $frsm_15a, &quot;The software includes its LICENCE file &quot;)
+(checkbox: 2bind $frsm_15a, &quot;The software includes its LICENSE file &quot;)
 (checkbox: 2bind $frsm_15b, &quot;The source code includes licensing information for all components bundled with that software&quot;)
 (checkbox: 2bind $frsm_15c, &quot;The software licensing information is in SPDX format&quot;)
 
@@ -434,10 +434,10 @@ The overall FAIR score is calculated by identifying what percentage of metrics y
 
 The individual scores for the different categories were:
 
- (meter: bind $f_score, 11.5, &quot;X&quot;, &quot;Findability&quot;, green)
- (meter: bind $a_score, 2.5, &quot;X&quot;, &quot;Accessability&quot;, green)
- (meter: bind $i_score, 4, &quot;X&quot;, &quot;Interoperability&quot;, green)
- (meter: bind $r_score, 8, &quot;X&quot;, &quot;Reusability&quot;, green)
+ (meter: bind $f_score, 11.5, &quot;X&quot;, &quot;Findability: (round: $f_score / 11.5 * 100)%&quot;, green)
+ (meter: bind $a_score, 2.5, &quot;X&quot;, &quot;Accessibility: (round: $a_score / 2.5 * 100)%&quot;, green)
+ (meter: bind $i_score, 4, &quot;X&quot;, &quot;Interoperability: (round: $i_score / 4 * 100)%&quot;, green)
+ (meter: bind $r_score, 8, &quot;X&quot;, &quot;Reusability: (round: $r_score / 8 * 100)%&quot;, green)
 
 These metrics were developed to be domain-agnostic, and take into account characteristics which are specific to research software such as its executability, its composite nature and its continuous evolution and versioning. Though most of the FAIR4RS Principles can be turned into a measurable metric, some are much harder to quantify, and hence be assessed by any automated tool in the future. In these cases, it may only be possible to test for existence rather than quality or correctness. Others, such as “R3. Software meets domain-relevant community standards” can be seen to apply to many metrics, and the implementation of a metric will reference these community standards.
 
